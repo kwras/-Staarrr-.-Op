@@ -1,43 +1,55 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const client = new Discord.Client();
 
 
-const devs = ['331954822494289921' , '331954822494289921' , '331954822494289921' , '331954822494289921'];
-const adminprefix = "-";
+const PREFIX = "#"
 client.on('message', message => {
-    var argresult = message.content.split(` `).slice(1).join(' ');
-      if (!devs.includes(message.author.id)) return;
-      
-  if (message.content.startsWith(adminprefix + 'ply')) {
-    client.user.setGame(argresult);
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
-  } else 
-  if (message.content.startsWith(adminprefix + 'wt')) {
-  client.user.setActivity(argresult, {type:'WATCHING'});
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
-  } else 
-  if (message.content.startsWith(adminprefix + 'ls')) {
-  client.user.setActivity(argresult , {type:'LISTENING'});
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
-  } else 
-  if (message.content.startsWith(adminprefix + 'st')) {
-    client.user.setGame(argresult, "https://www.twitch.tv/idk");
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
-  }
-  });
+  if (!message.content.startsWith(PREFIX)) return;
+  var args = message.content.split(' ').slice(1);
+  var argresult = args.join(' ');
+  if (message.author.id !== "483743143989084161") return;
 
   
-  client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag} !`);
+  if (message.content.startsWith(PREFIX + 'sw')) {
+  client.user.setActivity(argresult, {type: 'WATCHING'})
+     console.log('test' + argresult);
+    message.channel.sendMessage(`**Watch Now: **${argresult}`)
+} 
+
  
+  if (message.content.startsWith(PREFIX + 'setlis')) {
+  client.user.setActivity(argresult, {type: 'LISTENING'})
+     console.log('test' + argresult);
+    message.channel.sendMessage(`LISTENING Now: **${argresult}`)
+} 
+
+
+if (message.content.startsWith(PREFIX + 'setname')) {
+  client.user.setUsername(argresult).then
+      message.channel.sendMessage(`Username Changed To **${argresult}**`)
+  return message.reply("You Can change the username 2 times per hour");
+} 
+
+if (message.content.startsWith(PREFIX + 'setavatar')) {
+  client.user.setAvatar(argresult);
+   message.channel.sendMessage(`Avatar Changed Successfully To **${argresult}**`);
+}
+
+if (message.content.startsWith(PREFIX + 'setstream')) {
+  client.user.setGame(argresult, "https://www.twitch.tv/KiNg66S");
+     console.log('test' + argresult);
+    message.channel.sendMessage(`**Streaming: **${argresult}`)
+} 
+if (message.content.startsWith(PREFIX + 'setplay')) {
+  client.user.setGame(argresult);
+     console.log('test' + argresult);
+    message.channel.sendMessage(`Playing: **${argresult}`)
+} 
+
+
+
 });
- 
-client.on('guildMemberAdd',async member => {
-  if(member.guild.id !== '501419525661786122') return;
-  setTimeout(function(){
-  member.guild.channels.find(r => r.id === '501420247392190465').send('You`re In  **Energy**  Welcome ..');
-},3000);
-});
+
   
 
 client.login(process.env.BOT_TOKEN);
