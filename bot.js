@@ -27,17 +27,34 @@ client.on('ready', () => {
   console.log('')
 });
 
-client.on('message', message => {
-    if(!message.channel.guild) return;
+client.on('message', async message => {
+            if(!message.channel.guild) return;
+             if (message.content.startsWith("1set")) {
 let args = message.content.split(' ').slice(1).join(' ');
-if (message.content.startsWith('-bc-users')){
-if(!message.author.id === 'اي دي صاحب البوت') return;
-message.channel.sendMessage('جار ارسال الرسالة |✅')
-client.users.forEach(m =>{
-m.sendMessage(args)
-})
+            let sigMessage = await args;
+            
+            if (sigMessage === "online") {
+                client.user.setStatus("online");
+                message.author.send("Your status was set to online.");
+            }
+            if (sigMessage === "idle") {
+                client.user.setStatus("idle");
+                message.author.send("Your status was set to idle.");
+            }
+            if (sigMessage === "invisible") {
+                client.user.setStatus("invisible");
+                message.author.send("Your status was set to invisible.");
+            }
+            if (sigMessage === "dnd") {
+                client.user.setStatus("dnd");
+                message.author.send("Your status was set to dnd.");
+            }
+            // message.author.send("." + message.content);
+        
 }
 });
   
+
+
 
 client.login(process.env.BOT_TOKEN);
